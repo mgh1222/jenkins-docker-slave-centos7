@@ -65,5 +65,5 @@ VOLUME /home/jenkins/.jenkins
 WORKDIR /home/jenkins
 # EXPOSE 22
 # CMD ["/usr/sbin/sshd", "-D"]
-# CMD tail -f /etc/hosts
-ENTRYPOINT ["jenkins-slave"]
+CMD tail -f /etc/hosts
+# ENTRYPOINT ["jenkins-slave"]
