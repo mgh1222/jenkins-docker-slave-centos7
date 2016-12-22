@@ -43,8 +43,8 @@ RUN yum install -y epel-release \
      && rm -f jdk-8u112-linux-x64.rpm \
         # && rm -f jdk-8u102-linux-x64.rpm \
      && yum clean all \
-     && groupadd -g 1111 jenkins \
-     && useradd -c "Jenkins user" -d $HOME -u 1111 -g 1111 -m jenkins
+     && groupadd -g 10000 jenkins \
+     && useradd -c "Jenkins user" -d $HOME -u 10000 -g 10000 -m jenkins
 
 ARG VERSION=2.62
 
@@ -56,5 +56,7 @@ USER jenkins
 RUN mkdir /home/jenkins/.jenkins
 VOLUME /home/jenkins/.jenkins
 WORKDIR /home/jenkins
-# Define default command.
-CMD ["bash"]
+
+COPY jenkins-slave /usr/local/bin/jenkins-slave
+
+ENTRYPOINT ["jenkins-slave"]
