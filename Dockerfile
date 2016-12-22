@@ -4,7 +4,7 @@ FROM centos:7.3.1611
 ENV HOME /home/jenkins
 
 # RUN yum update -y -x kernel \
-RUN yum yum install -y epel-release \
+RUN yum install -y epel-release \
      && yum clean all \
      && yum install -y \
         autoconf \
