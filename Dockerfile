@@ -3,6 +3,7 @@ FROM centos:7.3.1611
 # ENV TERM xterm
 # ENV HOME=/home/jenkins PATH=/usr/local/bin:$PATH
 ENV HOME /home/jenkins
+ARG VERSION=2.62
 # COPY jenkins-slave /usr/local/bin/jenkins-slave
 ADD jenkins-slave /usr/local/bin/jenkins-slave
 # RUN yum update -y -x kernel \
@@ -50,16 +51,12 @@ RUN yum install -y epel-release \
      && groupadd -g 10000 jenkins \
      && useradd -c "Jenkins user" -d $HOME -u 10000 -g 10000 -m jenkins \
      && usermod -aG wheel jenkins \
-     && echo '%wheel      ALL=(ALL)  NOPASSWD: ALL' >> /etc/sudoers
+     && echo '%wheel      ALL=(ALL)  NOPASSWD: ALL' >> /etc/sudoers \
     #  && chmod 755 /usr/local/bin/jenkins-slave
     #  && /usr/bin/ssh-keygen -A
-
-
-ARG VERSION=2.62
-
-RUN curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${VERSION}/remoting-${VERSION}.jar \
-    && chmod 755 /usr/share/jenkins \
-    && chmod 644 /usr/share/jenkins/slave.jar
+     && curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${VERSION}/remoting-${VERSION}.jar \
+     && chmod 755 /usr/share/jenkins \
+     && chmod 644 /usr/share/jenkins/slave.jar
 
 USER jenkins
 RUN mkdir /home/jenkins/.jenkins
