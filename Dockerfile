@@ -1,7 +1,7 @@
 FROM centos:7.3.1611
 
 # ENV TERM xterm
-ENV HOME=/home/jenkins PATH=/usr/local/bin/:$PATH
+ENV HOME=/home/jenkins PATH=/usr/local/bin:$PATH
 # COPY jenkins-slave /usr/local/bin/jenkins-slave
 ADD jenkins-slave /usr/local/bin/jenkins-slave
 # RUN yum update -y -x kernel \
@@ -22,6 +22,7 @@ RUN yum install -y epel-release \
         git \
         libtool \
         make \
+        openssh-server \
         patch \
         pkgconfig \
         # redhat-rpm-config \
@@ -45,7 +46,11 @@ RUN yum install -y epel-release \
         # && rm -f jdk-8u102-linux-x64.rpm \
      && yum clean all \
      && groupadd -g 10000 jenkins \
-     && useradd -c "Jenkins user" -d $HOME -u 10000 -g 10000 -m jenkins
+     && useradd -c "Jenkins user" -d $HOME -u 10000 -g 10000 -m jenkins \
+     && echo '%wheel      ALL=(ALL)  NOPASSWD: ALL' >> /etc/sudoers \
+    #  && /usr/local/bin/jenkins-slave
+     && /usr/bin/ssh-keygen -A \
+
 
 ARG VERSION=2.62
 
@@ -57,6 +62,7 @@ USER jenkins
 RUN mkdir /home/jenkins/.jenkins
 VOLUME /home/jenkins/.jenkins
 WORKDIR /home/jenkins
-# CMD tail -F /var/log/messages
-CMD tail -f /etc/hosts
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
+# CMD tail -f /etc/hosts
 # ENTRYPOINT ["jenkins-slave"]
