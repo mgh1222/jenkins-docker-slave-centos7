@@ -1,30 +1,32 @@
 FROM centos:7.3.1611
 
 # ENV TERM xterm
-ENV HOME=/home/jenkins PATH=/usr/local/bin:$PATH
+# ENV HOME=/home/jenkins PATH=/usr/local/bin:$PATH
+ENV HOME /home/jenkins
 # COPY jenkins-slave /usr/local/bin/jenkins-slave
 ADD jenkins-slave /usr/local/bin/jenkins-slave
 # RUN yum update -y -x kernel \
 RUN yum install -y epel-release \
      && yum clean all \
+     && yum update -y -x kernel \
      && yum install -y \
-        autoconf \
-        automake \
+        # autoconf \
+        # automake \
         bind-utils \
-        binutils \
-        bison \
+        # binutils \
+        # bison \
         coreutils \
         curl \
-        flex \
-        gcc \
-        gcc-c++ \
-        gettext \
+        # flex \
+        # gcc \
+        # gcc-c++ \
+        # gettext \
         git \
-        libtool \
-        make \
+        # libtool \
+        # make \
         openssh-server \
-        patch \
-        pkgconfig \
+        # patch \
+        # pkgconfig \
         # redhat-rpm-config \
         # rpm-build \
         # rpm-sign \
@@ -35,7 +37,7 @@ RUN yum install -y epel-release \
         wget \
         #  java-1.8.0-openjdk \
         #  java-1.8.0-openjdk-devel \
-    #  && yum --setopt=group_package_types=mandatory,default,optional group install -y "Development Tools" \
+     && yum --setopt=group_package_types=mandatory,default,optional group install -y "Development Tools" \
      && wget -q -c --no-check-certificate \
         --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
         "http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-x64.rpm" \
