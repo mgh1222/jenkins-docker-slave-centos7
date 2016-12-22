@@ -3,9 +3,9 @@ FROM centos:7.3.1611
 # ENV TERM xterm
 ENV HOME /home/jenkins
 
-RUN yum update -y -x kernel \
-     && yum install -y \
-        epel-release \
+# RUN yum update -y -x kernel \
+RUN yum yum install -y epel-release \
+     && yum clean all \
      && yum install -y \
         autoconf \
         automake \
@@ -57,4 +57,4 @@ RUN mkdir /home/jenkins/.jenkins
 VOLUME /home/jenkins/.jenkins
 WORKDIR /home/jenkins
 # Define default command.
-# CMD ["bash"]
+CMD ["bash"]
