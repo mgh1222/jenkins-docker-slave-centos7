@@ -1,7 +1,7 @@
 FROM centos:7.3.1611
 
 # ENV TERM xterm
-ENV HOME /home/jenkins PATH /usr/local/bin/:$PATH
+ENV HOME=/home/jenkins PATH=/usr/local/bin/:$PATH
 
 # RUN yum update -y -x kernel \
 RUN yum install -y epel-release \
