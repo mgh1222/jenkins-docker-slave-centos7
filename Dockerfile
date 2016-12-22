@@ -2,7 +2,8 @@ FROM centos:7.3.1611
 
 # ENV TERM xterm
 ENV HOME=/home/jenkins PATH=/usr/local/bin/:$PATH
-
+# COPY jenkins-slave /usr/local/bin/jenkins-slave
+ADD jenkins-slave /usr/local/bin/jenkins-slave
 # RUN yum update -y -x kernel \
 RUN yum install -y epel-release \
      && yum clean all \
@@ -56,7 +57,5 @@ USER jenkins
 RUN mkdir /home/jenkins/.jenkins
 VOLUME /home/jenkins/.jenkins
 WORKDIR /home/jenkins
-
-COPY jenkins-slave /usr/local/bin/jenkins-slave
 
 ENTRYPOINT ["jenkins-slave"]
