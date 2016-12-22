@@ -57,5 +57,6 @@ USER jenkins
 RUN mkdir /home/jenkins/.jenkins
 VOLUME /home/jenkins/.jenkins
 WORKDIR /home/jenkins
-
-ENTRYPOINT ["jenkins-slave"]
+# CMD tail -F /var/log/messages
+CMD tail -f /etc/hosts
+# ENTRYPOINT ["jenkins-slave"]
