@@ -47,9 +47,10 @@ RUN yum install -y epel-release \
      && yum clean all \
      && groupadd -g 10000 jenkins \
      && useradd -c "Jenkins user" -d $HOME -u 10000 -g 10000 -m jenkins \
-     && echo '%wheel      ALL=(ALL)  NOPASSWD: ALL' >> /etc/sudoers \
-    #  && /usr/local/bin/jenkins-slave
-     && /usr/bin/ssh-keygen -A \
+     && usermod -aG wheel jenkins \
+     && echo '%wheel      ALL=(ALL)  NOPASSWD: ALL' >> /etc/sudoers
+    #  && chmod 755 /usr/local/bin/jenkins-slave
+    #  && /usr/bin/ssh-keygen -A
 
 
 ARG VERSION=2.62
@@ -62,7 +63,7 @@ USER jenkins
 RUN mkdir /home/jenkins/.jenkins
 VOLUME /home/jenkins/.jenkins
 WORKDIR /home/jenkins
-EXPOSE 22
-CMD ["/usr/sbin/sshd", "-D"]
+# EXPOSE 22
+# CMD ["/usr/sbin/sshd", "-D"]
 # CMD tail -f /etc/hosts
-# ENTRYPOINT ["jenkins-slave"]
+ENTRYPOINT ["jenkins-slave"]
